@@ -90,15 +90,3 @@ func handleDelete(c echo.Context) error {
 		return c.JSON(http.StatusOK, successMsg{true, successTrue})
 	}
 }
-
-/* func handleLogin(c echo.Context) error {
-	pass := c.QueryParam("pass")
-
-	data, err := base64.StdEncoding.DecodeString(pass)
-	if err != nil {
-		return c.JSON(http.StatusOK, successMsg{false, returnError(err)})
-	} else {
-		http.SetCookie(c.Response(), http.Cookie{Name: "pass", Value: pass})
-		return c.JSON(http.StatusOK, successMsg{true, successTrue})
-	}
-} */

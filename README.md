@@ -1,3 +1,5 @@
+![ss](https://cloud.githubusercontent.com/assets/486818/25779429/4c9d6006-3320-11e7-97de-9fe4f81095a5.png)
+
 # BSEP Server
 
 A local server for allowing user to install search engine plugins.
