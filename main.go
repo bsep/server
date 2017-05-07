@@ -17,10 +17,12 @@ func createAuth(cred []string) echo.MiddlewareFunc {
 	})
 }
 
-func server(port string, cred []string) {
+func server(port string, cred []string, debug bool) {
 	e := echo.New()
 
-	e.Use(middleware.Logger())
+	if debug {
+		e.Use(middleware.Logger())
+	}
 	e.Use(middleware.Recover())
 
 	e.GET("/list", handleAll)
@@ -46,6 +48,7 @@ func main() {
 
 	portPtr := flag.Int("p", 8080, "server port")
 	credPtr := flag.String("c", "admin:123456", "admin username & password")
+	debugPtr := flag.Bool("d", false, "disable or enable logging")
 	flag.Parse()
 
 	port := fmt.Sprintf("%d", *portPtr)
@@ -57,5 +60,5 @@ func main() {
 		os.Exit(1)
 	}
 
-	server(port, credArr)
+	server(port, credArr, *debugPtr)
 }
