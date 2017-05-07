@@ -1,0 +1,20 @@
+build:
+  binary: seps
+  goos:
+    - windows
+    - darwin
+    - linux
+  goarch:
+    - amd64
+
+archive:
+  name_template: "{{.Binary}}_{{.Os}}_{{.Arch}}"
+
+  format_overrides:
+    - goos: windows
+      format: zip
+
+  replacements:
+    windows: windows
+    darwin: mac
+    linux: linux

@@ -1,0 +1,52 @@
+#actions-main li {
+  margin-bottom: 1rem;
+}
+
+#actions-main a {
+  font-size: 1.5rem;
+}
+
+#plugins-table th:last-child {
+  text-align: right;
+}
+
+#plugins-table a {
+  font-size: 1.25rem;
+  padding: .35rem .85rem;
+}
+
+#plugins-table ul {
+  margin-bottom: 0;
+}
+
+#col-left .btn-group {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.clear-filter i {
+  cursor: pointer;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  bottom: 0;
+  font-size: 2rem;
+  color: #666;
+}
+
+.clear-filter i:before {
+  content: "\f05c";
+}
+
+.clear-filter i:hover:before {
+  content: "\f057";
+}
+
+.clear-filter i:hover {
+  color: #444;
+}
+
+textarea.xml {
+  font-family: "Courier New";
+  white-space: pre;
+}
