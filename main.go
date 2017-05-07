@@ -41,7 +41,7 @@ func server(port string, cred []string) {
 var version = "master"
 
 func main() {
-	fmt.Println("Search Plugins", version, "by Doğan Çelik (dogancelik.com)")
+	fmt.Println("Search Plugins", "v"+version, "by Doğan Çelik (dogancelik.com)")
 	fmt.Println("Starting Search Plugins server…")
 
 	portPtr := flag.Int("p", 8080, "server port")

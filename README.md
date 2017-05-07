@@ -5,7 +5,7 @@ A local server for allowing user to install search engine plugins.
 ## Install
 
 1. [Download latest version](https://github.com/bsep/server/releases/latest) for your operating system.
-2. Start `bsep`
+2. Start `seps`
 3. Open `http://localhost:8080/`
 4. Install BSEP packs at [bsep.github.io](https://bsep.github.io/)
 
