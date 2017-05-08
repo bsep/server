@@ -14,94 +14,131 @@
 </head>
 <body>
   <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h1>Search Plugins</h1>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="about-modal">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">About</h4>
+          </div>
+          <div class="modal-body">
+            <p>A server for search engine plugins.</p>
+            <ul>
+              <li><a target="_blank" href="https://github.com/bsep/server">Github</a></li>
+              <li><a target="_blank" href="https://dogancelik.com/donate.html">Donate</a></li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="row">
-      <div id="col-left" class="col-md-3">
-        <h2>Actions</h2>
-        <div class="well">
-          <ul id="actions-main" class="list-unstyled">
-            <li><a class="btn btn-block btn-default" ng-click="refreshTable()"><i class="fa fa-refresh"></i>
+    <div class="modal fade" tabindex="-1" role="dialog" id="pack-modal" ng-controller="PackCtrl">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form name="packForm" ng-submit="submit()">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Download Plugin Pack</h4>
+            </div>
+            <div class="modal-body">
+              <p>Please enter a URL below (Any archive file that 7-Zip supports)</p>
+              <div class="form-group">
+                <input name="url" type="text" class="form-control" id="pack-url" placeholder="Pack URL" required ng-model="pack.url">
+              </div>
+              <p class="help-block" ng-show="packForm.url.$invalid">A URL is required</p>
+              <div class="alert" ng-class="{'alert-warning': !success, 'alert-success': success}" role="alert" ng-show="success != null">{{ message }}</div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+              <input type="submit" class="btn btn-primary" value="Download" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="add-modal" ng-controller="AddCtrl">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <form name="addForm">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Add New Plugin</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="add-filename"><b>Filename</b></label>
+              <input id="add-filename" type="text" class="form-control" placeholder="Filename" ng-model="add.filename">
+            </div>
+            <div class="form-group">
+              <label for="add-filename"><b>Content</b></label>
+              <textarea id="add-content" type="text" class="form-control xml" placeholder="Content" rows="15" ng-model="add.content"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" ng-click="save()">Add</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Search Plugins</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="javascript:void(0)" ng-click="refreshTable()"><i class="fa fa-refresh"></i>
    Reload Plugins</a></li>
-            <li><a class="btn btn-block btn-default" href="javascript:void(0)" data-toggle="modal" data-target="#pack-modal"><i class="fa fa-cloud-download"></i>
+            <li><a href="javascript:void(0)" data-toggle="modal" data-target="#pack-modal"><i class="fa fa-cloud-download"></i>
    Download Pack</a></li>
-            <li><a class="btn btn-block btn-default" href="javascript:void(0)" data-toggle="modal" data-target="#add-modal"><i class="fa fa-plus"></i>
+            <li><a href="javascript:void(0)" data-toggle="modal" data-target="#add-modal"><i class="fa fa-plus"></i>
    Add Plugin</a></li>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" data-toggle="modal" data-target="#about-modal"><i class="fa fa-info"></i> About</a></li>
+          </ul>
         </div>
+      </div>
+    </nav>
 
-        <div class="modal fade" tabindex="-1" role="dialog" id="pack-modal" ng-controller="PackCtrl">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <form name="packForm" ng-submit="submit()">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title">Download Plugin Pack</h4>
-                </div>
-                <div class="modal-body">
-                  <p>Please enter a URL below (Any archive file that 7-Zip supports)</p>
-                  <div class="form-group">
-                    <input name="url" type="text" class="form-control" id="pack-url" placeholder="Pack URL" required ng-model="pack.url">
-                  </div>
-                  <p class="help-block" ng-show="packForm.url.$invalid">A URL is required</p>
-                  <div class="alert" ng-class="{'alert-warning': !success, 'alert-success': success}" role="alert" ng-show="success != null">{{ message }}</div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" ng-click="close()">Close</button>
-                  <input type="submit" class="btn btn-primary" value="Download" />
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <div class="modal fade" tabindex="-1" role="dialog" id="add-modal" ng-controller="AddCtrl">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <form name="addForm">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Add New Plugin</h4>
-              </div>
-              <div class="modal-body">
-                <div class="form-group">
-                  <label for="add-filename"><b>Filename</b></label>
-                  <input id="add-filename" type="text" class="form-control" placeholder="Filename" ng-model="add.filename">
-                </div>
-                <div class="form-group">
-                  <label for="add-filename"><b>Content</b></label>
-                  <textarea id="add-content" type="text" class="form-control xml" placeholder="Content" rows="15" ng-model="add.content"></textarea>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
-                <button type="submit" class="btn btn-primary" data-dismiss="modal" ng-click="save()">Add</button>
-              </div>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <hr>
-
-        <h2>Filter</h2>
+    <div id="filter-row" class="row">
+      <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="well">
           <div class="btn-group" ng-controller="FilterCtrl">
             <input type="search" class="form-control" placeholder="Filter by name" ng-model="$root.filterName" ng-change="hidden=false">
             <a class="clear-filter" ng-click="clear($event)" ng-hide="hidden"><i class="fa fa-times-circle-o"></i></a>
           </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="well">
           <div class="btn-group" ng-controller="FilterCtrl">
             <input type="search" class="form-control" placeholder="Filter by description" ng-model="$root.filterDesc" ng-change="hidden=false">
             <a class="clear-filter" ng-click="clear($event)" ng-hide="hidden"><i class="fa fa-times-circle-o"></i></a>
           </div>
         </div>
       </div>
+    </div>
 
-      <div id="col-right" class="col-md-9">
+    <div class="row">
+      <div class="col-md-12">
 
         <div class="modal fade" tabindex="-1" role="dialog" id="edit-modal" ng-controller="EditCtrl">
           <div class="modal-dialog modal-lg" role="document">

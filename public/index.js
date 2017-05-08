@@ -121,4 +121,7 @@ angular
   $rootScope.refreshTable = function () {
     return $http.get('/list').then(function (res) { $rootScope.table = res.data; })
   };
+
+  function toggleClass (e) { $(e.currentTarget).toggleClass('active'); }
+  $('.navbar-nav li').hover(toggleClass, toggleClass);
 })

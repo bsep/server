@@ -1,11 +1,3 @@
-#actions-main li {
-  margin-bottom: 1rem;
-}
-
-#actions-main a {
-  font-size: 1.5rem;
-}
-
 #plugins-table th:last-child {
   text-align: right;
 }
@@ -17,11 +9,6 @@
 
 #plugins-table ul {
   margin-bottom: 0;
-}
-
-#col-left .btn-group {
-  margin-bottom: 1rem;
-  width: 100%;
 }
 
 .clear-filter i {
@@ -49,4 +36,27 @@
 textarea.xml {
   font-family: "Courier New";
   white-space: pre;
+}
+
+#filter-row .btn-group {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  #plugins-table .btn {
+    font-size: 0px !important;
+  }
+
+  #plugins-table .btn i {
+    font-size: 1.25rem !important;
+  }
+}
+
+.navbar-nav a {
+  font-size: 1.7rem;
+}
+
+.navbar-nav i {
+  margin-left: 1rem;
+  margin-right: 0.3rem;
 }
