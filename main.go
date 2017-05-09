@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+	"github.com/skratchdot/open-golang/open"
 	"os"
 )
 
@@ -17,7 +18,7 @@ func createAuth(cred []string) echo.MiddlewareFunc {
 	})
 }
 
-func server(port string, cred []string, debug bool) {
+func server(port string, cred []string, debug bool, browser bool) {
 	e := echo.New()
 
 	if debug {
@@ -37,6 +38,9 @@ func server(port string, cred []string, debug bool) {
 	e.Static("/plugins", "plugins")
 	e.Static("/", "public")
 
+	if browser {
+		open.Run("http://localhost:" + port + "/")
+	}
 	e.Start(":" + port)
 }
 
@@ -49,6 +53,7 @@ func main() {
 	portPtr := flag.Int("p", 8080, "server port")
 	credPtr := flag.String("c", "admin:123456", "admin username & password")
 	debugPtr := flag.Bool("d", false, "disable or enable logging")
+	browserPtr := flag.Bool("o", false, "open browser")
 	flag.Parse()
 
 	port := fmt.Sprintf("%d", *portPtr)
@@ -60,5 +65,5 @@ func main() {
 		os.Exit(1)
 	}
 
-	server(port, credArr, *debugPtr)
+	server(port, credArr, *debugPtr, *browserPtr)
 }
