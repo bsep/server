@@ -45,6 +45,7 @@ func server(port string, cred []string, debug bool, browser bool) {
 }
 
 var version = "master"
+var debugMode bool
 
 func main() {
 	fmt.Println("Search Plugins", "v"+version, "by Doğan Çelik (dogancelik.com)")
@@ -58,6 +59,7 @@ func main() {
 
 	port := fmt.Sprintf("%d", *portPtr)
 	cred := *credPtr
+	debugMode = *debugPtr
 
 	errCred, credArr := splitCreds(cred)
 	if errCred != nil {
@@ -65,5 +67,5 @@ func main() {
 		os.Exit(1)
 	}
 
-	server(port, credArr, *debugPtr, *browserPtr)
+	server(port, credArr, debugMode, *browserPtr)
 }

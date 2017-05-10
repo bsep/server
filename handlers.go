@@ -44,6 +44,10 @@ func handlePack(c echo.Context) error {
 		return c.JSON(http.StatusOK, successMsg{false, returnError(packerr)})
 	}
 
+	if debugMode {
+		downloader.DebugMode = true
+	}
+
 	exterr := downloader.ExtractPack(packname, tmppath)
 	if exterr != nil {
 		return c.JSON(http.StatusOK, successMsg{false, returnError(exterr)})

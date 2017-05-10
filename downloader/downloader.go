@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 )
@@ -52,7 +51,5 @@ func GetPluginsPath(joinpath string) string {
 func ExtractPack(packname string, tmppath string) error {
 	foldername := strings.TrimSuffix(packname, filepath.Ext(packname)) // Get folder name from plugin pack
 	outputpath := GetPluginsPath(foldername)                           // Get output path for pack
-
-	cmd := exec.Command("7za", "x", tmppath, "-aoa", "-r", "-o"+outputpath, "*.xml")
-	return cmd.Run()
+	return unzip(tmppath, outputpath)
 }
