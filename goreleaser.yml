@@ -18,3 +18,8 @@ archive:
     windows: windows
     darwin: mac
     linux: linux
+
+  files:
+    - LICENSE
+    - README.md
+    - public/**
