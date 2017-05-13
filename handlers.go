@@ -33,24 +33,25 @@ const (
 )
 
 func handlePack(c echo.Context) error {
-	packurl := c.QueryParam("url")
-	parsedurl, urlerr := url.Parse(packurl)
-	if urlerr != nil {
-		return c.JSON(http.StatusOK, successMsg{false, returnError(urlerr)})
+	query_url := c.QueryParam("url")
+	parsed_url, err := url.Parse(query_url)
+	if err != nil {
+		return c.JSON(http.StatusOK, successMsg{false, returnError(err)})
 	}
 
-	packname, tmppath, packerr := downloader.DownloadPack(parsedurl.String())
-	if packerr != nil {
-		return c.JSON(http.StatusOK, successMsg{false, returnError(packerr)})
+	tmp_path, err := downloader.Download(parsed_url.String())
+	if err != nil {
+		return c.JSON(http.StatusOK, successMsg{false, returnError(err)})
 	}
 
 	if debugMode {
 		downloader.DebugMode = true
 	}
 
-	exterr := downloader.ExtractPack(packname, tmppath)
-	if exterr != nil {
-		return c.JSON(http.StatusOK, successMsg{false, returnError(exterr)})
+	pack_name := downloader.GetFilenameFromURL(parsed_url.String())
+	err = downloader.ExtractPack(pack_name, tmp_path)
+	if err != nil {
+		return c.JSON(http.StatusOK, successMsg{false, returnError(err)})
 	} else {
 		return c.JSON(http.StatusOK, successMsg{true, successTrue})
 	}

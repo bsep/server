@@ -6,18 +6,14 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
-var DebugMode bool = false
+type extractFunc func(*zip.File, string) // maybe add later
 
-func logError(err error) {
-	if err != nil {
-		log.Println(err.Error())
-	}
-}
-
-func extractFile(f *zip.File, dest string) {
-	path := filepath.Join(dest, f.Name)
+func extractFile(f *zip.File, out_path, rm_path string) {
+	file_name := strings.Replace(f.Name, rm_path, "", 1)
+	path := filepath.Join(out_path, file_name)
 	if DebugMode {
 		log.Println("Creating", path)
 	}
@@ -36,14 +32,14 @@ func extractFile(f *zip.File, dest string) {
 	rc.Close()
 }
 
-func unzip(zip_path string, out_path string) error {
+func Unzip(zip_path, out_path, rm_path string) error {
 	r, err := zip.OpenReader(zip_path)
 	if err != nil {
 		return err
 	}
 
 	for _, f := range r.File {
-		extractFile(f, out_path)
+		extractFile(f, out_path, rm_path)
 	}
 
 	if err := r.Close(); err != nil {

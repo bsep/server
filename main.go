@@ -3,49 +3,23 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
-	"github.com/skratchdot/open-golang/open"
 	"os"
 )
 
-func createAuth(cred []string) echo.MiddlewareFunc {
-	return middleware.BasicAuth(func(username, password string, c echo.Context) (error, bool) {
-		if username == cred[0] && password == cred[1] {
-			return nil, true
-		}
-		return nil, false
-	})
-}
-
-func server(port string, cred []string, debug bool, browser bool) {
-	e := echo.New()
-
-	if debug {
-		e.Use(middleware.Logger())
-	}
-	e.Use(middleware.Recover())
-
-	e.GET("/list", handleAll)
-
-	admin := e.Group("/admin")
-	admin.Use(createAuth(cred))
-	admin.GET("/pack", handlePack)
-	admin.POST("/add", handleAdd)
-	admin.POST("/edit", handleEdit)
-	admin.GET("/delete", handleDelete)
-
-	e.Static("/plugins", "plugins")
-	e.Static("/", "public")
-
-	if browser {
-		open.Run("http://localhost:" + port + "/")
-	}
-	e.Start(":" + port)
-}
-
 var version = "master"
 var debugMode bool
+
+type serverConfig struct {
+	port        int
+	credentials []string
+	debug       bool
+	browser     bool
+}
+
+func errorAndExit(err error, code int) {
+	fmt.Println(fmt.Errorf("Error: %v", err))
+	os.Exit(code)
+}
 
 func main() {
 	fmt.Println("Search Plugins", "v"+version, "by Doğan Çelik (dogancelik.com)")
@@ -57,15 +31,14 @@ func main() {
 	browserPtr := flag.Bool("o", false, "open browser")
 	flag.Parse()
 
-	port := fmt.Sprintf("%d", *portPtr)
-	cred := *credPtr
-	debugMode = *debugPtr
-
-	errCred, credArr := splitCreds(cred)
-	if errCred != nil {
-		fmt.Println(fmt.Errorf("Error: %v", errCred))
-		os.Exit(1)
+	err, creds := splitCreds(*credPtr)
+	if err != nil {
+		errorAndExit(err, 1)
 	}
 
-	server(port, credArr, debugMode, *browserPtr)
+	debugMode = *debugPtr
+	cfg := serverConfig{*portPtr, creds, debugMode, *browserPtr}
+
+	initWeb()
+	startServer(cfg)
 }
