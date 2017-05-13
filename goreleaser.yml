@@ -22,4 +22,3 @@ archive:
   files:
     - LICENSE
     - README.md
-    - public/**
