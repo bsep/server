@@ -8,11 +8,11 @@ import (
 )
 
 func createAuth(cred []string) echo.MiddlewareFunc {
-	return middleware.BasicAuth(func(username, password string, c echo.Context) (error, bool) {
+	return middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
 		if username == cred[0] && password == cred[1] {
-			return nil, true
+			return true, nil
 		}
-		return nil, false
+		return false, nil
 	})
 }
 

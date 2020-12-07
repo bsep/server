@@ -1,7 +1,7 @@
 package editor
 
 import (
-	"../downloader"
+	"github.com/bsep/server/downloader"
 	"errors"
 	"io/ioutil"
 	"os"

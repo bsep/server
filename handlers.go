@@ -1,9 +1,9 @@
 package main
 
 import (
-	"./downloader"
-	"./editor"
-	"./parser"
+	"github.com/bsep/server/downloader"
+	"github.com/bsep/server/editor"
+	"github.com/bsep/server/parser"
 	"fmt"
 	"github.com/labstack/echo"
 	"log"

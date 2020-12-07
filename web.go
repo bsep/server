@@ -1,7 +1,7 @@
 package main
 
 import (
-	"./downloader"
+	"github.com/bsep/server/downloader"
 	"fmt"
 	"os"
 	"path/filepath"
